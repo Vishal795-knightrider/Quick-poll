@@ -1,9 +1,11 @@
-function App() {
-  return (
-    <h1 className="text-5xl text-red-500 font-bold">
-      Tailwind Working
-    </h1>
-  )
-}
+import Navbar from "./Components/landing.jsx/Navbar";
+import Hero from "./Components/landing.jsx/Hero"
 
-export default App
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200">
+      <Navbar />
+      <Hero />
+    </div>
+  );
+}

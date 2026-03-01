@@ -3,15 +3,16 @@ export default function Hero({ onGoCreate }) {
     <div className="hero">
       <div className="badge">Frictionless Polling</div>
       <h1>
-        Make decisions,<br />
-        <span className="gradient-text">not forms.</span>
+        Make decisions faster,<br />
+        <span className="gradient-text">Not longer forms.</span>
       </h1>
       <p>
-        Create instant, beautiful polls that people actually love to answer.{' '}
-        <span className="highlight">No logins</span> no wait times—just pure feedback.
-      </p>
+      Create interactive polls that people actually engage with.
+      <span className="highlight">No signups.</span>
+      — Just participation.
+     </p>
       <button className="btn-dark" onClick={onGoCreate}>
-        Create a Free Poll
+      Start Polling Free
       </button>
     </div>
   )

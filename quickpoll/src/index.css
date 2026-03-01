@@ -229,7 +229,7 @@ nav {
   color: var(--text); margin-bottom: 20px;
 }
 .hero h1 .gradient-text {
-  background: linear-gradient(90deg, var(--orange) 0%, #e91e8c 100%);
+  background: linear-gradient(90deg, #7c3aed 0%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -600,3 +600,5 @@ footer {
 /* ─── Bar fill width variants (replaces inline width styles) ─────────────── */
 .bar-fill--72 { width: 72%; }
 .bar-fill--28 { width: 28%; }
+
+

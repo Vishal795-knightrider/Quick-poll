@@ -19,17 +19,17 @@ function MainCard() {
       <div className="poll-card-header">
         <span className="live-badge">
           <span className="live-dot" />
-          LIVE RESULT
+          LIVE POLL
         </span>
         <span className="live-dot" />
       </div>
 
-      <h3>Should we redesign the homepage?</h3>
+      <h3>Should we launch the new dashboard this week?</h3>
 
       <div className="bar-row">
         <div className="bar-label">
-          <span>Yes, it&apos;s time</span>
-          <span className="pct">72%</span>
+          <span>Launch now 🚀</span>
+          <span className="pct">68%</span>
         </div>
         <div className="bar-track">
           <div className="bar-fill bar-fill--72" />
@@ -53,7 +53,7 @@ function MainCard() {
             <div className="avatar blue">B</div>
             <div className="avatar green">C</div>
           </div>
-          <span className="vote-count">1,248 VOTES</span>
+          <span className="vote-count">2,431 VOTES</span>
         </div>
         <span className="vote-now">VOTE NOW</span>
       </div>

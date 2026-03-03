@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { collection, addDoc } from "firebase/firestore"
+import { db } from "../firebase"
 import AddOptionButton from './AddOptionButton.jsx'
-import MultiToggle     from './MultiToggle.jsx'
+import MultiToggle from './MultiToggle.jsx'
 
 export default function PollForm() {
-  const [question,    setQuestion]    = useState('')
-  const [options,     setOptions]     = useState(['', ''])
+  const [question, setQuestion] = useState('')
+  const [options, setOptions] = useState(['', ''])
   const [multiSelect, setMultiSelect] = useState(false)
 
   const isValid =
@@ -19,9 +21,28 @@ export default function PollForm() {
     setOptions(prev => [...prev, ''])
   }
 
-  function handleSubmit() {
-    const slug = Math.random().toString(36).substring(2, 10)
-    alert(`Poll created! ✅\n\n"${question}"\n\nShare link: Pollify.app/p/${slug}`)
+  async function handleSubmit() {
+    try {
+      const filteredOptions = options.filter(o => o.trim() !== '')
+
+      const docRef = await addDoc(collection(db, "polls"), {
+        question,
+        options: filteredOptions,
+        multiSelect,
+        createdAt: new Date()
+      })
+
+      alert(
+        `Poll created! ✅\n\n"${question}"\n\nShare link: ${window.location.origin}/poll/${docRef.id}`
+      )
+
+      setQuestion('')
+      setOptions(['', ''])
+      setMultiSelect(false)
+
+    } catch (error) {
+      console.error("Error creating poll:", error)
+    }
   }
 
   return (

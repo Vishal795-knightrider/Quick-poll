@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 
 export default function PollPage() {
@@ -22,20 +22,48 @@ export default function PollPage() {
     fetchPoll()
   }, [id])
 
-  if (!poll) return <h2 style={{textAlign:'center',marginTop:'50px'}}>Loading...</h2>
+  // vote function
+  async function vote(index) {
+    const newVotes = [...poll.votes]
+    newVotes[index] += 1
+
+    const docRef = doc(db, "polls", id)
+
+    await updateDoc(docRef, {
+      votes: newVotes
+    })
+
+    // update UI
+    setPoll({
+      ...poll,
+      votes: newVotes
+    })
+  }
+
+  if (!poll)
+    return (
+      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+        Loading...
+      </h2>
+    )
 
   return (
-    <div style={{maxWidth:'600px',margin:'80px auto',textAlign:'center'}}>
+    <div style={{ maxWidth: "600px", margin: "80px auto", textAlign: "center" }}>
       <h2>{poll.question}</h2>
 
       {poll.options.map((opt, i) => (
-        <div key={i} style={{
-          padding:'12px',
-          margin:'10px 0',
-          background:'#f4f5f7',
-          borderRadius:'8px'
-        }}>
-          {opt}
+        <div
+          key={i}
+          onClick={() => vote(i)}
+          style={{
+            padding: "12px",
+            margin: "10px 0",
+            background: "#f4f5f7",
+            borderRadius: "8px",
+            cursor: "pointer"
+          }}
+        >
+          {opt} — {poll.votes[i]} votes
         </div>
       ))}
     </div>

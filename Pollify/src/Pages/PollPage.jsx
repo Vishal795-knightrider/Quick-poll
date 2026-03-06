@@ -47,25 +47,22 @@ export default function PollPage() {
       </h2>
     )
 
-  return (
-    <div style={{ maxWidth: "600px", margin: "80px auto", textAlign: "center" }}>
-      <h2>{poll.question}</h2>
+  const votes = poll.votes || poll.options.map(() => 0)
 
-      {poll.options.map((opt, i) => (
-        <div
-          key={i}
-          onClick={() => vote(i)}
-          style={{
-            padding: "12px",
-            margin: "10px 0",
-            background: "#f4f5f7",
-            borderRadius: "8px",
-            cursor: "pointer"
-          }}
-        >
-          {opt} — {poll.votes[i]} votes
-        </div>
-      ))}
-    </div>
-  )
+return (
+  <div style={{maxWidth:'600px',margin:'80px auto',textAlign:'center'}}>
+    <h2>{poll.question}</h2>
+
+    {poll.options.map((opt, i) => (
+      <div key={i} style={{
+        padding:'12px',
+        margin:'10px 0',
+        background:'#f4f5f7',
+        borderRadius:'8px'
+      }}>
+        {opt} ({votes[i]})
+      </div>
+    ))}
+  </div>
+)
 }

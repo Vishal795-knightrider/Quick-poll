@@ -26,10 +26,11 @@ export default function PollForm() {
       const filteredOptions = options.filter(o => o.trim() !== '')
 
       const docRef = await addDoc(collection(db, "polls"), {
-        question,
-        options: filteredOptions,
-        multiSelect,
-        createdAt: new Date()
+      question,
+      options: filteredOptions,
+      votes: filteredOptions.map(() => 0),
+      multiSelect,
+      createdAt: new Date()
       })
 
       alert(

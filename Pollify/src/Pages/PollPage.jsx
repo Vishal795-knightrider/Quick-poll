@@ -1,3 +1,4 @@
+import Navbar from "../Components/Navbar.jsx"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import {
@@ -71,11 +72,7 @@ export default function PollPage() {
 
 
   if (!poll)
-    return (
-      <h2 style={{ textAlign: "center", marginTop: 50 }}>
-        Loading...
-      </h2>
-    )
+    return <h2 className="loading">Loading...</h2>
 
 
 
@@ -86,145 +83,134 @@ export default function PollPage() {
 
   return (
 
-    <div
-      style={{
-        maxWidth: 600,
-        margin: "80px auto",
-        textAlign: "center",
-        background: "#fff",
-        padding: 30,
-        borderRadius: 12
-      }}
-    >
+    <>
 
-      <h2>{poll.question}</h2>
+      {/* ✅ NAVBAR */}
 
-      {/* =================== */}
-      {/* BEFORE VOTE */}
-      {/* =================== */}
-
-      {!voted && poll.options.map((opt, i) => (
-
-        <div
-          key={i}
-          onClick={() => setSelected(i)}
-          style={{
-            margin: "12px 0",
-            padding: "12px",
-            borderRadius: 8,
-            border:
-              selected === i
-                ? "2px solid orange"
-                : "1px solid #ccc",
-            cursor: "pointer"
-          }}
-        >
-          <input
-            type="radio"
-            checked={selected === i}
-            readOnly
-          />
-          {opt}
-        </div>
-
-      ))}
+      <Navbar
+        isDark={false}
+        onToggleTheme={() => {}}
+        onCreateClick={() => window.location.href = "/create"}
+      />
 
 
-      {!voted && (
+      <div className="poll-page">
 
-        <button
-          onClick={submitVote}
-          style={{
-            marginTop: 20,
-            padding: "12px",
-            background: "#ff7a00",
-            border: "none",
-            color: "white",
-            width: "100%",
-            borderRadius: 8
-          }}
-        >
-          Submit Vote →
-        </button>
-
-      )}
+        <h2 className="poll-title">
+          {poll.question}
+        </h2>
 
 
 
-      {/* =================== */}
-      {/* AFTER VOTE */}
-      {/* =================== */}
+        {/* BEFORE VOTE */}
 
-      {voted && poll.options.map((opt, i) => {
-
-        const percent =
-          total === 0
-            ? 0
-            : Math.round(
-                (poll.votes[i] / total) * 100
-              )
-
-        return (
+        {!voted && poll.options.map((opt, i) => (
 
           <div
             key={i}
-            style={{
-              margin: "12px 0",
-              textAlign: "left"
-            }}
+            className={
+              selected === i
+                ? "poll-option selected"
+                : "poll-option"
+            }
+            onClick={() => setSelected(i)}
           >
 
-            <div>
-              {opt} — {percent}%
-            </div>
+            <input
+              type="radio"
+              checked={selected === i}
+              readOnly
+            />
 
-            <div
-              style={{
-                height: 10,
-                background: "#ddd",
-                borderRadius: 5,
-                overflow: "hidden"
-              }}
-            >
-              <div
-                style={{
-                  width: percent + "%",
-                  background: "#ff7a00",
-                  height: "100%"
-                }}
-              />
-            </div>
+            {opt}
 
           </div>
 
-        )
-
-      })}
+        ))}
 
 
-      {voted && (
 
-        <div style={{ marginTop: 20 }}>
-
-          Total votes: {total}
-
-          <br /><br />
+        {!voted && (
 
           <button
-            onClick={() =>
-              navigator.clipboard.writeText(
-                window.location.href
-              )
-            }
+            className="vote-btn"
+            onClick={submitVote}
           >
-            Copy Link
+            Submit Vote →
           </button>
 
-        </div>
+        )}
 
-      )}
 
-    </div>
+
+        {/* AFTER VOTE */}
+
+        {voted && poll.options.map((opt, i) => {
+
+          const percent =
+            total === 0
+              ? 0
+              : Math.round(
+                  (poll.votes[i] / total) * 100
+                )
+
+          return (
+
+            <div
+              key={i}
+              className="result-row"
+            >
+
+              <div className="result-label">
+                <span>{opt}</span>
+                <span>{percent}%</span>
+              </div>
+
+              <div className="result-bar">
+
+                <div
+                  className="result-fill"
+                  style={{
+                    width: percent + "%"
+                  }}
+                />
+
+              </div>
+
+            </div>
+
+          )
+
+        })}
+
+
+
+        {voted && (
+
+          <div className="total-votes">
+
+            Total votes: {total}
+
+            <br />
+
+            <button
+              className="copy-btn"
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  window.location.href
+                )
+              }
+            >
+              Copy Link
+            </button>
+
+          </div>
+
+        )}
+
+      </div>
+
+    </>
 
   )
 
